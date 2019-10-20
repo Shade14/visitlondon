@@ -17,7 +17,17 @@
   },
   "homepage": "https://github.com/Shade14/workflow#readme",
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "babelify": "^10.0.0",
+    "browser-sync": "^2.26.7",
+    "del": "^5.1.0",
     "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-inject-partials": "^1.0.5",
     "gulp-sass": "^4.0.2"
   }
 }
