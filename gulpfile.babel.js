@@ -6,7 +6,7 @@ import injectPartials       from 'gulp-inject-partials';
 import del                  from 'del';
 import prefixer             from 'gulp-autoprefixer';
 import babel                from 'gulp-babel';
-
+import babelify             from 'babelify';
 
 const SOURCEPATHS = {
   htmlSource: 'src/*.html',
@@ -54,6 +54,14 @@ function stylesLib(){
     .pipe(gulp.dest(APPPATH.css));
 }
 
+function scripts(){
+  return gulp.src(SOURCEPATHS.jsSource, {sourcemaps: true, allowEmpty: true})
+    .pipe(babel())
+    //.pipe(concat('app.min.js'))
+    .pipe(browserify({transform:['babelify']}))
+    .pipe(gulp.dest(APPPATH.js));
+}
+
 function reload(done){
   server.reload();
   done();
@@ -69,9 +77,11 @@ function serve(done){
 }
 
 const watchHTML = () => gulp.watch([SOURCEPATHS.htmlSource, SOURCEPATHS.htmlPartialsSource], gulp.series(cleanHTML, copyHTML, reload));
-const watchCss = () => gulp.watch(SOURCEPATHS.sassSource, gulp.series(styles, stylesLib, reload));
+const watchCss  = () => gulp.watch(SOURCEPATHS.sassSource, gulp.series(styles, stylesLib, reload));
+const watchJs   = () => gulp.watch(SOURCEPATHS.jsSource, gulp.series(scripts, reload));
 
-const watcher = gulp.parallel(watchHTML, watchCss);
+
+const watcher = gulp.parallel(watchHTML, watchCss, watchJs);
 
 //gulp.task('default', ['sass']);
 const dev = gulp.series(copyHTML, styles, serve, watcher);
