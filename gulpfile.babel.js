@@ -51,7 +51,7 @@ function prodHTML() {
     .pipe(gulp.dest(APPPATH.root));
 }
 
-function styles(){
+function styles() {
   return gulp.src(SOURCEPATHS.sassApp)
     .pipe(prefixer())
     .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
@@ -59,7 +59,7 @@ function styles(){
     .pipe(gulp.dest(APPPATH.css));
 }
 
-function stylesLib(){
+function stylesLib() {
   return gulp.src(SOURCEPATHS.cssLibSources)
     .pipe(gulp.dest(APPPATH.css));
 }
@@ -74,19 +74,19 @@ function prodStyles() {
     .pipe(gulp.dest(APPPATH.css));
 }
 
-function copyBootstrap(){
+function copyBootstrap() {
   var bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css');
   return bootstrapCSS
     .pipe(gulp.dest(APPPATH.css));
 }
 
-function copyFontAwesome(){
+function copyFontAwesome() {
   var fontSource = gulp.src('./node_modules/font-awesome/fonts/*.{eot,svg,ttf,woff,woff2,otf}');
   return fontSource
     .pipe(gulp.dest(APPPATH.fonts));
 }
 
-function fontAwesomeCss(){
+function fontAwesomeCss() {
   var fontCss = gulp.src('./node_modules/font-awesome/css/font-awesome.min.css');
   return fontCss
     .pipe(gulp.dest(APPPATH.css));
@@ -94,7 +94,7 @@ function fontAwesomeCss(){
 
 const fontAwesome = gulp.series(copyFontAwesome, fontAwesomeCss);
 
-function scripts(){
+function scripts() {
   return gulp.src(SOURCEPATHS.jsSource, {sourcemaps: true, allowEmpty: true})
     .pipe(babel())
     //.pipe(concat('app.min.js'))
@@ -102,7 +102,7 @@ function scripts(){
     .pipe(gulp.dest(APPPATH.js));
 }
 
-function prodScripts(){
+function prodScripts() {
   return gulp.src(SOURCEPATHS.jsSource, {sourcemaps: true, allowEmpty: true})
     .pipe(babel())
     .pipe(concat('app.min.js'))
@@ -111,19 +111,19 @@ function prodScripts(){
     .pipe(gulp.dest(APPPATH.js));
 }
 
-function images(){
+function images() {
   return gulp.src(SOURCEPATHS.imgSource)
     .pipe(newer(APPPATH.img))
     .pipe(imagemin())
     .pipe(gulp.dest(APPPATH.img));
 }
 
-function reload(done){
+function reload(done) {
   server.reload();
   done();
 }
 
-function serve(done){
+function serve(done) {
   server.init([APPPATH.css + '/*.css', APPPATH.root + '/*.html', APPPATH.js + '/*.js'], {
     server: {
       baseDir: APPPATH.root
@@ -144,3 +144,4 @@ const dev = gulp.series(cleaner, fontAwesome, copyBootstrap, copyHTML, styles, s
 const prod = gulp.series(cleaner, fontAwesome, copyBootstrap, prodHTML, prodStyles, stylesLib,prodScripts, images);
 
 export default dev;
+exports.prod = prod;
