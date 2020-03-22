@@ -1,6 +1,14 @@
-$black: #000000;
-$red: #dd0000;
-
-body {
-  background-color: $black;
-}
+@import url(https://fonts.googleapis.com/css?family=Bitter:400,700|Open+Sans:400,700&display=swap);
+@import "variables";
+@import "mixins";
+@import "typography";
+@import "layout";
+@import "grid";
+@import "navigation";
+@import "backgrounds";
+@import "card";
+@import "buttons";
+@import "gallery";
+@import "tables";
+@import "services";
+@import "footer";
